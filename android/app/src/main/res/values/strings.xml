@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+      <!-- App name -->
+    <string name="app_name">msme</string>
+
+    <string name="facebook_app_id">748905627770525</string>
+    <string name="fb_login_protocol_scheme">fb748905627770525</string>
+    <string name="facebook_client_token">84e7b3b2089d5ad5c4fcbe4f367ac4f8</string>
+</resources>

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "607119483078",
+    "project_id": "msme-bf2b9",
+    "storage_bucket": "msme-bf2b9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:607119483078:android:dabc4e3be9635e42fbf7c7",
+        "android_client_info": {
+          "package_name": "com.example.msme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "607119483078-9kkcsh227thu5feuokkhn40v5m3v3fq4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.msme",
+            "certificate_hash": "c3d0666b66e05590ce9f9eb000f46472de9678ee"
+          }
+        },
+        {
+          "client_id": "607119483078-34b29onqg4pu2cuemp7vp1nphv9r3m63.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnWF_3PNtXD1f38sL6B-KHoMFawCIKVNQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "607119483078-34b29onqg4pu2cuemp7vp1nphv9r3m63.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
