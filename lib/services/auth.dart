@@ -40,7 +40,9 @@ class AuthMethods {
     try {
       showLoadingDialog(context, message: "Signing in with Google...");
 
-      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+      );
       final GoogleSignInAccount? googleAccount = await googleSignIn.signIn();
 
       if (googleAccount == null) {
@@ -61,12 +63,32 @@ class AuthMethods {
 
       final result = await auth.signInWithCredential(credential);
       final user = result.user;
+      debugPrint("User signed : ${user?.toString()}");
 
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
 
       if (user != null) {
-        final appUser = AppUser.fromFirebaseUser(user);
+        // 🔎 Fix for email being null
+        String? email = user.email;
+        if (email == null || email.isEmpty) {
+          for (var profile in user.providerData) {
+            if (profile.providerId == "google.com") {
+              email = profile.email;
+              break;
+            }
+          }
+        }
+
+        debugPrint("✅ User signed in: ${user.displayName}, $email");
+
+        // Create AppUser model
+        final appUser = AppUser(
+          id: user.uid,
+          name: user.displayName ?? "No Name",
+          email: email ?? "No Email",
+          photoUrl: user.photoURL,
+        );
 
         await DatabaseMethods().addUser(appUser.id, appUser.toMap());
 

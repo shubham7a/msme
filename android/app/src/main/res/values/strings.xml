@@ -4,7 +4,7 @@
       <!-- App name -->
     <string name="app_name">msme</string>
 
-    <string name="facebook_app_id">748905627770525</string>
-    <string name="fb_login_protocol_scheme">fb748905627770525</string>
-    <string name="facebook_client_token">84e7b3b2089d5ad5c4fcbe4f367ac4f8</string>
+    <string name="facebook_app_id">1104264207768649</string>
+    <string name="fb_login_protocol_scheme">fb1104264207768649</string>
+    <string name="facebook_client_token">5c4e9094cefd0a823e9756c01760d453</string>
 </resources>
