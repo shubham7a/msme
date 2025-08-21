@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:msme/screen/home.dart';
+import 'package:msme/screen/onboarding_page.dart';
 import 'package:msme/screen/widget/bottom_navigation.dart';
 import 'package:msme/services/auth.dart';
 import 'package:msme/services/widget_support.dart'; // Assuming this has AppWidget.normaltextstyle
@@ -28,7 +29,11 @@ class _LoginPageState extends State<LoginPage> {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back, color: Colors.white),
           onPressed: () {
-            Navigator.pop(context); // go back to DashboardPage
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const OnboardingPage()),
+              (route) => false, // remove all previous routes
+            );
           },
         ),
         backgroundColor: Colors.grey,

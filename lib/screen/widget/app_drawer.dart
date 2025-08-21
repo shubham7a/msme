@@ -8,7 +8,15 @@ class AppDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final User? user = FirebaseAuth.instance.currentUser;
-    debugPrint("Current User: $user");
+    // debugPrint("Current User: $user");
+    final String displayName =
+        user?.displayName ?? user?.providerData.first.displayName ?? "Guest";
+    final String email =
+        user?.email ?? user?.providerData.first.email ?? "No Email";
+    final String photoUrl =
+        user?.photoURL ?? user?.providerData.first.photoURL ?? "";
+    //debugPrint("User Info: $displayName, $email, $photoUrl");
+
     return Drawer(
       child: ListView(
         padding: EdgeInsets.zero,
@@ -17,19 +25,17 @@ class AppDrawer extends StatelessWidget {
             decoration: const BoxDecoration(color: Colors.teal),
             currentAccountPicture: CircleAvatar(
               radius: 40,
-              backgroundImage: user?.photoURL != null
-                  ? NetworkImage(user!.photoURL!)
+              // ignore: unnecessary_null_comparison
+              backgroundImage: photoUrl != null
+                  ? NetworkImage(photoUrl)
                   : const AssetImage("assets/images/default_avatar.png")
                         as ImageProvider,
             ),
             accountName: Text(
-              user?.displayName ?? "Guest User",
+              displayName,
               style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
-            accountEmail: Text(
-              user?.email ?? "",
-              style: const TextStyle(fontSize: 14),
-            ),
+            accountEmail: Text(email, style: const TextStyle(fontSize: 14)),
           ),
           ListTile(
             leading: const Icon(Icons.dashboard),

@@ -45,9 +45,9 @@ class AuthMethods {
     try {
       showLoadingDialog(context, message: "Signing in with Google...");
 
-      // final GoogleSignIn googleSignIn = GoogleSignIn(
-      //   scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
-      // );
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+      );
       final GoogleSignInAccount? googleAccount = await googleSignIn.signIn();
 
       if (googleAccount == null) {
