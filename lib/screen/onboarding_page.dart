@@ -7,7 +7,7 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF42A5F5), // custom blue background
+      backgroundColor: Colors.teal, // custom blue background
       body: Center(
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(

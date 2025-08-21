@@ -238,6 +238,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.2"
+  flutter_slider_drawer:
+    dependency: "direct main"
+    description:
+      name: flutter_slider_drawer
+      sha256: "41a627bc3a87c981ca128c0ec4e0f2135244c8e13a78bf472db4d59a1ed9896f"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -248,6 +256,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  font_awesome_flutter:
+    dependency: "direct main"
+    description:
+      name: font_awesome_flutter
+      sha256: b738e35f8bb4957896c34957baf922f99c5d415b38ddc8b070d14b7fa95715d4
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.9.1"
   google_identity_services_web:
     dependency: transitive
     description:
@@ -485,6 +501,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.1"
+  stylish_bottom_bar:
+    dependency: "direct main"
+    description:
+      name: stylish_bottom_bar
+      sha256: "8bd394d51e3c1d93a3013fd35e7f77ca29f820df204d0f8580f4773fc660e750"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   term_glyph:
     dependency: transitive
     description:

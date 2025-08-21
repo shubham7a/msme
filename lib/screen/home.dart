@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:msme/models/app_user.dart';
-import 'package:msme/screen/login_page.dart';
-import 'package:msme/services/auth.dart';
 
 class Home extends StatefulWidget {
   final AppUser user;
@@ -30,21 +28,21 @@ class _HomeState extends State<Home> {
             const SizedBox(height: 40),
             ElevatedButton(
               onPressed: () async {
-                await AuthMethods().signOutUser(context);
+                // await AuthMethods().signOutUser(context);
 
-                // ✅ Show snackbar on logout button press
-                // ignore: use_build_context_synchronously
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Logout successful"),
-                    backgroundColor: Colors.green,
-                  ),
-                );
-                Navigator.pushReplacement(
-                  // ignore: use_build_context_synchronously
-                  context,
-                  MaterialPageRoute(builder: (context) => const LoginPage()),
-                );
+                // // ✅ Show snackbar on logout button press
+                // // ignore: use_build_context_synchronously
+                // ScaffoldMessenger.of(context).showSnackBar(
+                //   const SnackBar(
+                //     content: Text("Logout successful"),
+                //     backgroundColor: Colors.green,
+                //   ),
+                // );
+                // Navigator.pushReplacement(
+                //   // ignore: use_build_context_synchronously
+                //   context,
+                //   MaterialPageRoute(builder: (context) => const LoginPage()),
+                // );
               },
               child: const Text("Logout"),
             ),
