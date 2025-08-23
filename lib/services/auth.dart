@@ -77,7 +77,7 @@ class AuthMethods {
         // 🔎 Fix for email being null
         String? email = user.email;
         if (email == null || email.isEmpty) {
-          for (var profile in user.providerData) {
+          for (final profile in user.providerData) {
             if (profile.providerId == "google.com") {
               email = profile.email;
               break;
@@ -95,7 +95,12 @@ class AuthMethods {
           photoUrl: user.photoURL,
         );
 
-        await DatabaseMethods().addUser(appUser.id, appUser.toMap());
+        final data = await DatabaseMethods().addUser(
+          appUser.id,
+          appUser.toMap(),
+        );
+
+        debugPrint("User data added to Firestore: $data");
 
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
