@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:msme/screen/home.dart';
+import 'package:msme/screen/onboarding_page.dart';
+import 'package:msme/screen/widget/bottom_navigation.dart';
 import 'package:msme/services/auth.dart';
 import 'package:msme/services/widget_support.dart'; // Assuming this has AppWidget.normaltextstyle
 
@@ -14,10 +16,27 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[100],
+      backgroundColor: Colors.teal,
       appBar: AppBar(
-        title: const Text("Login Page", style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.white,
+        title: const Text(
+          "Login Page",
+          style: TextStyle(
+            color: Colors.black,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          onPressed: () {
+            Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: (context) => const OnboardingPage()),
+              (route) => false, // remove all previous routes
+            );
+          },
+        ),
+        backgroundColor: Colors.grey,
       ),
       body: Center(
         child: Column(
@@ -45,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                         // ignore: use_build_context_synchronously
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Home(user: appUser),
+                          builder: (context) => BottomNavigation(),
                         ),
                       );
                     }

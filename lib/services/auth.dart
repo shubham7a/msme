@@ -31,6 +31,11 @@ void showLoadingDialog(BuildContext context, {String message = "Loading..."}) {
 class AuthMethods {
   final FirebaseAuth auth = FirebaseAuth.instance;
 
+  final GoogleSignIn googleSignIn = GoogleSignIn(
+    scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+  );
+  final FacebookAuth facebookAuth = FacebookAuth.instance;
+
   Future<User?> getCurrentUser() async {
     return auth.currentUser;
   }
@@ -40,7 +45,9 @@ class AuthMethods {
     try {
       showLoadingDialog(context, message: "Signing in with Google...");
 
-      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: ['email', 'https://www.googleapis.com/auth/userinfo.profile'],
+      );
       final GoogleSignInAccount? googleAccount = await googleSignIn.signIn();
 
       if (googleAccount == null) {
@@ -61,12 +68,32 @@ class AuthMethods {
 
       final result = await auth.signInWithCredential(credential);
       final user = result.user;
+      debugPrint("User signed : ${user?.toString()}");
 
       // ignore: use_build_context_synchronously
       Navigator.pop(context);
 
       if (user != null) {
-        final appUser = AppUser.fromFirebaseUser(user);
+        // 🔎 Fix for email being null
+        String? email = user.email;
+        if (email == null || email.isEmpty) {
+          for (final profile in user.providerData) {
+            if (profile.providerId == "google.com") {
+              email = profile.email;
+              break;
+            }
+          }
+        }
+
+        debugPrint("✅ User signed in: ${user.displayName}, $email");
+
+        // Create AppUser model
+        final appUser = AppUser(
+          id: user.uid,
+          name: user.displayName ?? "No Name",
+          email: email ?? "No Email",
+          photoUrl: user.photoURL,
+        );
 
         await DatabaseMethods().addUser(appUser.id, appUser.toMap());
 
@@ -97,7 +124,7 @@ class AuthMethods {
     try {
       showLoadingDialog(context, message: "Signing in with Facebook...");
 
-      final LoginResult loginResult = await FacebookAuth.instance.login(
+      final LoginResult loginResult = await facebookAuth.login(
         permissions: ['email', 'public_profile'],
       );
 
@@ -149,38 +176,58 @@ class AuthMethods {
     }
   }
 
-  Future<void> signOutUser(BuildContext context) async {
+  // Future<void> signOutUser(BuildContext context) async {
+  //   try {
+  //     await auth.signOut();
+
+  //     try {
+  //       await GoogleSignIn().signOut();
+  //     } catch (_) {
+  //       // ignore: use_build_context_synchronously
+  //       ScaffoldMessenger.of(
+  //         // ignore: use_build_context_synchronously
+  //         context,
+  //       ).showSnackBar(SnackBar(content: Text("Error signing out of Google")));
+  //     }
+
+  //     try {
+  //       await FacebookAuth.instance.logOut();
+  //     } catch (_) {
+  //       // ignore: use_build_context_synchronously
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(content: Text("Error signing out of Facebook")),
+  //       );
+  //     }
+
+  //     ScaffoldMessenger.of(
+  //       // ignore: use_build_context_synchronously
+  //       context,
+  //     ).showSnackBar(const SnackBar(content: Text("Logged out successfully.")));
+  //   } catch (e) {
+  //     ScaffoldMessenger.of(
+  //       // ignore: use_build_context_synchronously
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text("Error logging out: $e")));
+  //   }
+  // }
+
+  Future<void> signOutUser() async {
     try {
       await auth.signOut();
-
-      try {
-        await GoogleSignIn().signOut();
-      } catch (_) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(
-          // ignore: use_build_context_synchronously
-          context,
-        ).showSnackBar(SnackBar(content: Text("Error signing out of Google")));
-      }
-
-      try {
-        await FacebookAuth.instance.logOut();
-      } catch (_) {
-        // ignore: use_build_context_synchronously
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text("Error signing out of Facebook")),
-        );
-      }
-
-      ScaffoldMessenger.of(
-        // ignore: use_build_context_synchronously
-        context,
-      ).showSnackBar(const SnackBar(content: Text("Logged out successfully.")));
     } catch (e) {
-      ScaffoldMessenger.of(
-        // ignore: use_build_context_synchronously
-        context,
-      ).showSnackBar(SnackBar(content: Text("Error logging out: $e")));
+      debugPrint("Error signing out Firebase: $e");
+    }
+
+    try {
+      await googleSignIn.signOut();
+    } catch (e) {
+      debugPrint("Error signing out Google: $e");
+    }
+
+    try {
+      await facebookAuth.logOut();
+    } catch (e) {
+      debugPrint("Error signing out Facebook: $e");
     }
   }
 }
