@@ -95,12 +95,7 @@ class AuthMethods {
           photoUrl: user.photoURL,
         );
 
-        final data = await DatabaseMethods().addUser(
-          appUser.id,
-          appUser.toMap(),
-        );
-
-        debugPrint("User data added to Firestore: $data");
+        await DatabaseMethods().addUser(appUser.id, appUser.toMap());
 
         // ignore: use_build_context_synchronously
         ScaffoldMessenger.of(context).showSnackBar(
